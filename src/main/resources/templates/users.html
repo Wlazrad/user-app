@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+
+    <title>Users</title>
+    <style>
+        ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+        }
+        li {
+            margin: 0 5px;
+        }
+        a {
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            color: #333;
+        }
+        a:hover {
+            background-color: #f5f5f5;
+        }
+        .active {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Mobile Phone</th>
+        <th>Work Phone</th>
+        <th>City</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.personName.firstName}"></td>
+        <td th:text="${user.personName.lastName}"></td>
+        <td th:text="${user.email.isPresent() ? user.email.get() : 'N/A'}"></td>
+        <td th:text="${user.mobilePhone.isPresent() ? user.mobilePhone.get() : 'N/A'}"></td>
+        <td th:text="${user.workPhone.isPresent() ? user.workPhone.get() : 'N/A'}"></td>
+        <td th:text="${user.address.isPresent() ? user.address.get().city : 'N/A'}"></td>
+    </tr>
+</table>
+
+<div>
+    <ul>
+        <li th:if="${currentPage > 0}">
+            <a th:href="@{/api/int/user/view(page=0, size=${size})}"><<</a>
+            <a th:href="@{/api/int/user/view(page=${currentPage - 1}, size=${size})}"><</a>
+        </li>
+
+        <li th:each="i : ${#numbers.sequence(currentPage - 2 <= 0 ? 0 : currentPage - 2, currentPage + 2 >= totalPages ? totalPages - 1 : currentPage + 2)}">
+            <a th:href="@{/api/int/user/view(page=${i}, size=${size})}" th:text="${i + 1}" th:class="${i == currentPage ? 'active' : ''}"></a>
+        </li>
+
+        <li th:if="${currentPage < totalPages - 1}">
+            <a th:href="@{/api/int/user/view(page=${currentPage + 1}, size=${size})}">></a>
+            <a th:href="@{/api/int/user/view(page=${totalPages - 1}, size=${size})}">>></a>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>
