@@ -82,8 +82,7 @@ public class UserApi {
 
     @Operation(summary = "Dodanie metody komunikacji użytkownika")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Użytkownik został częściowo zaktualizowany"),
-            @ApiResponse(responseCode = "400", description = "Nieprawidłowa data urodzenia lub numer PESEL"),
+            @ApiResponse(responseCode = "200", description = "Dodano metody komunikacji"),
             @ApiResponse(responseCode = "403", description = "Brak dostępu do aktualizacji Użytkownika"),
             @ApiResponse(responseCode = "404", description = "Użytkownik nie został znaleziony"),
     })
